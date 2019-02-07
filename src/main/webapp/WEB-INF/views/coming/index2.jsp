@@ -118,8 +118,9 @@
             <tr>
                 <td>Отчисления фонд ТО</td>
                 <c:forEach items="${comings}" var="coming">
-                    <td>${coming.fundMaintenance}</td>
+                    <td class="fundMaintenance">${coming.fundMaintenance}</td>
                 </c:forEach>
+                <th id="fundMaintenanceSum"></th>
             </tr>
             <tr>
                 <td>Траты ТО</td>
@@ -138,8 +139,9 @@
             <tr>
                 <td>Отисления фонд ремонт</td>
                 <c:forEach items="${comings}" var="coming">
-                    <td>${coming.fundRepairs}</td>
+                    <td class="fundRepairs">${coming.fundRepairs}</td>
                 </c:forEach>
+                <th id="fundRepairsSum"></th>
             </tr>
             <tr>
                 <td>Траты ремонт</td>
@@ -270,74 +272,77 @@
             $('.investorIncome').each(function () {
                 sum += +this.textContent;
             });
-            investorIncomeSum.innerHTML = sum;
+            investorIncomeSum.innerHTML = sum.toFixed(2);
 
 
             sum = 0;
             $('.commissionControl').each(function () {
                 sum += +this.textContent;
             });
-            commissionControlSum.innerHTML = sum;
+            commissionControlSum.innerHTML = sum.toFixed(2);
 
 
             sum = 0;
             $('.comingincome').each(function () {
                 sum += +this.textContent;
             });
-            comingincomeSum.innerHTML = sum;
+            comingincomeSum.innerHTML = sum.toFixed(2);
 
 
             sum = 0;
             $('.commissionPartner').each(function () {
                 sum += +this.textContent;
             });
-            commissionPartnerSum.innerHTML = sum;
+            commissionPartnerSum.innerHTML = sum.toFixed(2);
 
             sum = 0;
             $('.driverSalary').each(function () {
                 sum += +this.textContent;
             });
-            driverSalarySum.innerHTML = sum;
+            driverSalarySum.innerHTML = sum.toFixed(2);
 
 
             sum = 0;
             $('.mileage').each(function () {
                 sum += +this.textContent;
             });
-            mileageSum.innerHTML = sum;
+            mileageSum.innerHTML = sum.toFixed(2);
 
+            var sumfundMaintenance = 0;
+            $('.fundMaintenance').each(function () {
+                sumfundMaintenance += +this.textContent;
+            });
+            fundMaintenanceSum.innerHTML = sumfundMaintenance.toFixed(2);
 
-            sum = 0;
+            var sumcostsOfMaintenance = 0;
             $('.costsOfMaintenance').each(function () {
-                sum += +this.textContent;
+                sumcostsOfMaintenance += +this.textContent;
             });
-            costsOfMaintenanceSum.innerHTML = sum;
+            costsOfMaintenanceSum.innerHTML = sumcostsOfMaintenance.toFixed(2);
 
-            sum = 0;
-            $('.costsOfRepairs').each(function () {
-                sum += +this.textContent;
+
+            var sumfundRepairs = 0;
+            $('.fundRepairs').each(function () {
+                sumfundRepairs += +this.textContent;
             });
-            costsOfRepairsSum.innerHTML = sum;
+            fundRepairsSum.innerHTML = sumfundRepairs.toFixed(2);
+
+            var  sumcostsOfRepairs = 0;
+            $('.costsOfRepairs').each(function () {
+                sumcostsOfRepairs += +this.textContent;
+            });
+            costsOfRepairsSum.innerHTML = sumcostsOfRepairs.toFixed(2);
 
 
             sum = 0;
             $('.profit').each(function () {
                 sum += +this.textContent;
             });
-            profitSum.innerHTML = sum;
-
-            sum = 0;
-            $('.capitalizationRepairs').each(function () {
-                sum += +this.textContent;
-            });
-            capitalizationRepairsSum.innerHTML = sum;
+            profitSum.innerHTML = sum.toFixed(2);
 
 
-            sum = 0;
-            $('.capitalizationMaintenance').each(function () {
-                sum += +this.textContent;
-            });
-            capitalizationMaintenanceSum.innerHTML = sum;
+            capitalizationRepairsSum.innerHTML = (sumfundRepairs-sumcostsOfRepairs).toFixed(2);
+            capitalizationMaintenanceSum.innerHTML =  (sumfundMaintenance-sumcostsOfMaintenance).toFixed(2);
 
         }
 

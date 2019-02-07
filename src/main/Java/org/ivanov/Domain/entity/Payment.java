@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -21,7 +22,7 @@ public class Payment {
     private String startDate;
 //    @Transient
 //    private String startDateDto;
-    private double sum;
+    private BigDecimal sum;
     @Column(columnDefinition = "timestamp")
     private LocalDateTime time;
     @ManyToOne(optional = false)
