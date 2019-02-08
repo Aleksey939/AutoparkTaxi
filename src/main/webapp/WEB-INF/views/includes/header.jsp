@@ -45,6 +45,9 @@
                             <a class="nav-link" href="/setting">Настройки</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/brand">Бренды</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/workdone">Выполненные работы</a>
                         </li>
 
