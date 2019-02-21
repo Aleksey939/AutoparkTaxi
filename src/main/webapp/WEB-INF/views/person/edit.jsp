@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
+
     <title>Редактирование персоны</title>
     <style>
         .field {
@@ -17,42 +18,48 @@
                 <div class="col-md-4 col-lg-4 content-container">
                     <div class="field">
                         <form method="post">
+
                             <label>
                                 <input type="hidden" value="${person.id}" name="id"/>
                             </label>
                             <br/>
                             <label>
-                                firstName: <input value="${person.firstName}" name="firstName"/>
+                                Имя: <input value="${person.firstName}" name="firstName"/>
                             </label>
                             <br/>
                             <label>
-                                lastName: <input value="${person.lastName}" name="lastName"/>
+                                Фвмилия: <input value="${person.lastName}" name="lastName"/>
                             </label>
                             <br/>
                             <label>
-                                passport: <input value="${person.passport}" name="passport"/>
+                                Паспорт: <input value="${person.passport}" name="passport"/>
                             </label>
                             <br/>
                             <label>
-                                identificationNumber: <input value="${person.identificationNumber}"
+                                ИНН: <input value="${person.identificationNumber}"
                                                              name="identificationNumber"/>
                             </label>
                             <br/>
                             <label>
-                                phone: <input value="${person.phone}" name="phone"/>
+                                Телефон: <input value="${person.phone}" name="phone"/>
                             </label>
                             <br/>
                             <label>
-                                email: <input input="email" value="${person.email}" name="email"/>
+                                Email: <input input="email" value="${person.email}" name="email"/>
                             </label>
                             <br/>
                             <label>
-                                password: <input name="password"/>
+                                Карта: <input input="card" value="${person.card}" name="card"/>
+                            </label>
+                            <br/>
+                            <label>
+                                Пароль: <input name="password"/>
                             </label> <br/>
 
 
                             <label>
-                                status: <select size="1" name="status">
+                                Статус: <select size="1" name="status">
+                                <option value=""> </option>
                                 <c:forEach var="personStatusValue"
                                            items="<%=org.ivanov.Domain.entity.status.values() %>">
                                     <option> ${personStatusValue}</option>

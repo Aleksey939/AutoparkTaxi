@@ -11,6 +11,7 @@ import java.util.Collection;
 @Data
 @Entity
 @ToString(exclude = "cars")
+
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +22,17 @@ public class Person {
     private String identificationNumber;
     private String phone;
     private String email;
+    private String card;
     private String password;
     private String status;
+    private Boolean enabled=true;
     @Column(columnDefinition = "timestamp")
     private LocalDateTime time;
     @OneToMany(mappedBy = "person",fetch = FetchType.EAGER)
     private Collection<Car> cars;
+
+//    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+//    private  Collection<Authorities> authorities;
 
 //    @OneToMany(mappedBy = "person",fetch = FetchType.EAGER)
 //    private Collection<Payment> payments;

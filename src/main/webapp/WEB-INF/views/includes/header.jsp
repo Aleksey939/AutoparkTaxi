@@ -1,4 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 
@@ -66,15 +67,15 @@
 
                     </p>
                     <sec:authentication var="user" property="principal" />
-                    <sec:authorize access="!isAuthenticated()">
-                    <a class="btn btn-sm btn-success" href="<c:url value="/login" />" role="button">Войти</a>
-                    </sec:authorize>
-                    <sec:authorize access="isAuthenticated()">
-                        <%--Здраствуйте:--%>
-                        <sec:authentication property="principal.username" />
-                            <a class="btn btn-sm btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
-
-                    </sec:authorize>
+                    <sec:authentication property="name"/>
+                   <%--<sec:authorize  access="!isAuthenticated()">--%>
+                    <%--<a class="btn btn-sm btn-success" href="<c:url value="/login" />" role="button">Войти</a>--%>
+                    <%--</sec:authorize>--%>
+                    <%--<sec:authorize access="isAuthenticated()">--%>
+                       <%--Здраствуйте:--%>
+                        <%--<sec:authentication property="principal.username" />--%>
+                            <%--<a class="btn btn-sm btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>--%>
+                    <%--</sec:authorize>--%>
                 </div>
             <hr class="mb-5">
 

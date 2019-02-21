@@ -22,6 +22,7 @@
                     <th>INN</th>
                     <th>Phone</th>
                     <th>Email</th>
+                    <th>Card</th>
                     <th>Status</th>
                     <th><a href="#link-4">Операция</a></th>
                 </tr>
@@ -36,6 +37,7 @@
                         <td>${person.identificationNumber}</td>
                         <td>${person.phone}</td>
                         <td>${person.email}</td>
+                        <td>${person.card}</td>
                         <td>${person.status}</td>
                         <th><a href="/person/edit/${person.id}">Редактировать</a>
                             <a href="/person/delete/${person.id}">Удалить</a></th>

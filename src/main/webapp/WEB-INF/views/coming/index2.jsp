@@ -11,7 +11,7 @@
         <h2>Приходы</h2>
         <form method="post">
             <label>
-                Ивестор: <select id="choice" onchange=func(); size="1" name="personId">
+                Инвестор: <select id="choice" onchange=func(); size="1" name="personId">
                 <option value="0"> Все</option>
                 <c:forEach var="person" items="${persons}">
                     <option value="${person.id}"> ${person.lastName}</option>
@@ -20,7 +20,8 @@
             </label>
 
 
-            </label>
+
+
 
 
             <label>
@@ -30,6 +31,12 @@
                     <option value="${car.id}"> ${car.number}</option>
                 </c:forEach>
             </select>
+                </br>
+            </label>
+            </br>
+            <label>
+                Дата с: <input type="date" value="2018-07-10" name="date1"/> По: <input type="date" value="2019-03-01" name="date2"/>
+
                 </br>
             </label>
             <input type="submit">
@@ -61,12 +68,12 @@
                     <td>${coming.startDate}</td>
                 </c:forEach>
             </tr>
-            <%--<tr>--%>
-                <%--<td>Конец периода</td>--%>
-                <%--<c:forEach items="${comings}" var="coming">--%>
-                    <%--<td>${coming.startDate+7}</td>--%>
-                <%--</c:forEach>--%>
-            <%--</tr>--%>
+            <tr>
+                <td>Конец периода</td>
+                <c:forEach items="${comings}" var="coming">
+                    <td>${coming.startDate.plusDays(7)}</td>
+                </c:forEach>
+            </tr>
             <tr>
                 <td>Выручка</td>
                 <c:forEach items="${comings}" var="coming">
@@ -74,6 +81,13 @@
                 </c:forEach>
                 <th id="comingincomeSum"></th>
             </tr>
+                <tr>
+                    <td>Бонус</td>
+                    <c:forEach items="${comings}" var="coming">
+                        <td class="bonus">${coming.bonus}</td>
+                    </c:forEach>
+                    <th id="bonusSum"></th>
+                </tr>
             <tr>
                 <td>% Партнера</td>
                 <c:forEach items="${comings}" var="coming">
@@ -169,6 +183,7 @@
                     <td>${coming.carWash}</td>
                 </c:forEach>
             </tr>
+
             <tr>
                 <td>Прибыль</td>
                 <c:forEach items="${comings}" var="coming">
@@ -184,81 +199,36 @@
                 <th id="commissionControlSum"></th>
             </tr>
             <tr>
-                <td>Прибыль инвестора</td>
+                <td>Доход инвестора</td>
                 <c:forEach items="${comings}" var="coming">
                     <td class="investorIncome">${coming.investorIncome}</td>
                 </c:forEach>
                 <th id="investorIncomeSum"></th>
             </tr>
+                <tr>
+                    <td>Амортизация</td>
+                    <c:forEach items="${comings}" var="coming">
+                        <td class="depreciation">${coming.depreciation}</td>
+                    </c:forEach>
+                    <th id="depreciationSum"></th>
+                </tr>
+                <tr>
+                    <td>Читстая Прибыль инвестора</td>
+                    <c:forEach items="${comings}" var="coming">
+                        <td class="netinvestorIncome">${coming.netinvestorIncome}</td>
+                    </c:forEach>
+                    <th id="netinvestorIncomeSum"></th>
+                </tr>
             <tr>
-                <td>"</td>
+                <td></td>
                 <c:forEach items="${comings}" var="coming">
-                    <th><a href="/coming/edit/${coming.id}">Редактировать</a>
-                        <a href="/coming/delete/${coming.id}">Удалить</a></th>
+                    <th><a href="payment/addpaymentforComing/${coming.id}">Оплатить</a>
+                        </br>  <a href="/coming/edit/${coming.id}">Редактировать</a>
+                        </br><a href="/coming/delete/${coming.id}">Удалить</a></th>
                 </c:forEach>
             </tr>
         </table>
-        <%--<table class="table table-hover table table-condensed ">--%>
-        <%--<thead>--%>
-        <%--<tr>--%>
-        <%--<th>#</th>--%>
-        <%--<th>startDate</th>--%>
-        <%--<th>EndDate</th>--%>
-        <%--<th>income</th>--%>
-        <%--<th>commissionPartner</th>--%>
-        <%--<th>driverSalary</th>--%>
-        <%--<th>mileage</th>--%>
-        <%--<th>consumptionOneKm</th>--%>
-        <%--<th>fuelCosts</th>--%>
-        <%--<th>profitOneKm</th>--%>
-        <%--<th>fundMaintenance</th>--%>
-        <%--<th>costsOfMaintenance</th>--%>
-        <%--<th>capitalizationMaintenance</th>--%>
-        <%--<th>fundRepairs</th>--%>
-        <%--<th>costsOfRepairs</th>--%>
-        <%--<th>capitalizationRepairsStart</th>--%>
-        <%--<th>currentExpenses</th>--%>
-        <%--<th>carWash</th>--%>
-        <%--<th>profit</th>--%>
-        <%--<th>commissionControl</th>--%>
-        <%--<th>investorIncome</th>--%>
-        <%--<th><a href="#link-4">Операция</a></th>--%>
-        <%--</tr>--%>
-        <%--</thead>--%>
-        <%--<tbody>--%>
-        <%--<c:forEach items="${comings}" var="coming">--%>
 
-        <%--<tr>--%>
-        <%--<th scope="row">${coming.id}</th>--%>
-
-        <%--<td>${coming.startDate}</td>--%>
-        <%--<td>${coming.startDate}</td>--%>
-        <%--//.plusDays(coming.days)--%>
-        <%--<td>${coming.income}</td>--%>
-        <%--<td>${coming.commissionPartner}</td>--%>
-        <%--<td>${coming.driverSalary}</td>--%>
-        <%--<td>${coming.mileage}</td>--%>
-        <%--<td>${coming.consumptionOneKm}</td>--%>
-        <%--<td>${coming.fuelCosts}</td>--%>
-        <%--<td>${coming.profitOneKm}</td>--%>
-        <%--<td>${coming.fundMaintenance}</td>--%>
-        <%--<td>${coming.costsOfMaintenance}</td>--%>
-        <%--<td>${coming.capitalizationMaintenanceStart}</td>--%>
-        <%--<td>${coming.fundRepairs}</td>--%>
-        <%--<td>${coming.costsOfRepairs}</td>--%>
-        <%--<td>${coming.capitalizationRepairsStart}</td>--%>
-        <%--<td>${coming.currentExpenses}</td>--%>
-        <%--<td>${coming.carWash}</td>--%>
-        <%--<td>${coming.profit}</td>--%>
-        <%--<td>${coming.commissionControl}</td>--%>
-        <%--<td>${coming.investorIncome}</td>--%>
-        <%--<td>${coming.car.number}</td>--%>
-        <%--<th><a href="/coming/edit/${coming.id}">Редактировать</a>--%>
-        <%--<a href="/coming/delete/${coming.id}">Удалить</a></th>--%>
-        <%--</tr>--%>
-        <%--</c:forEach>--%>
-        <%--</tbody>--%>
-        <%--</table>--%>
 
     </section>
 
@@ -343,6 +313,33 @@
 
             capitalizationRepairsSum.innerHTML = (sumfundRepairs-sumcostsOfRepairs).toFixed(2);
             capitalizationMaintenanceSum.innerHTML =  (sumfundMaintenance-sumcostsOfMaintenance).toFixed(2);
+
+            var suminvestorIncome = 0;
+            $('.investorIncome').each(function () {
+                suminvestorIncome += +this.textContent;
+            });
+            investorIncomeSum.innerHTML = suminvestorIncome.toFixed(2);
+
+
+
+            var sumnetinvestorIncome = 0;
+            $('.netinvestorIncome').each(function () {
+                sumnetinvestorIncome += +this.textContent;
+            });
+            netinvestorIncomeSum.innerHTML = sumnetinvestorIncome.toFixed(2);
+
+            var sumdepreciation = 0;
+            $('.depreciation').each(function () {
+                sumdepreciation += +this.textContent;
+            });
+            depreciationSum.innerHTML = sumdepreciation.toFixed(2);
+
+
+            var sumbonus = 0;
+            $('.bonus').each(function () {
+                sumbonus += +this.textContent;
+            });
+            bonusSum.innerHTML = sumbonus.toFixed(2);
 
         }
 

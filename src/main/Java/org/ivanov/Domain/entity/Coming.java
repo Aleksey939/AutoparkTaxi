@@ -18,8 +18,9 @@ public class Coming {
     private LocalDate startDate;
     @Transient
     private String startDateDto;
-    private Integer days;
+
     private double   income;
+    private double   bonus;
     private double   commissionPartner;
     private double   driverSalary;
     private Integer  mileage;
@@ -39,6 +40,9 @@ public class Coming {
     private double   profit;
     private double   commissionControl;
     private double   investorIncome;
+    private double   depreciation;
+    private double   netinvestorIncome;
+    private boolean payment=false;
     @Column(columnDefinition = "timestamp")
     private LocalDateTime time;
     @ManyToOne(optional = false)

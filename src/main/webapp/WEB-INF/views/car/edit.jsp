@@ -47,6 +47,7 @@
                         <br/>
                         <label>
                             investor: <select size="1"  name="personId">
+                            <option value=""> </option>
                             <c:forEach var="person" items="${persons}">
                                 <option value="${person.id}"> ${person.lastName}</option>
                             </c:forEach>
@@ -54,6 +55,7 @@
                         </label>
                         <label>
                             car: <select size="1" name="brandId">
+                            <option value=""> </option>
                             <c:forEach var="brand" items="${brands}">
                                 <option value="${brand.id}"> ${brand.model}</option>
                             </c:forEach>

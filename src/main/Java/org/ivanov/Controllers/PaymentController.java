@@ -1,9 +1,6 @@
 package org.ivanov.Controllers;
 
-import org.ivanov.Domain.entity.Brand;
-import org.ivanov.Domain.entity.Car;
-import org.ivanov.Domain.entity.Payment;
-import org.ivanov.Domain.entity.Person;
+import org.ivanov.Domain.entity.*;
 import org.ivanov.Domain.repositories.CarRepository;
 import org.ivanov.Domain.repositories.ComingRepository;
 import org.ivanov.Domain.repositories.PaymentRepository;
@@ -24,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/payment")
@@ -70,18 +68,20 @@ public class PaymentController {
         return "redirect:/payment";
     }
 
-    @Secured("ROLE_Manager")
-    @GetMapping("/add")
-    public String addPayment(Model model) {
-        model.addAttribute("persons", personRepository.findAll());
+//    @Secured("ROLE_Manager")
+    @GetMapping("/addpaymentforComing/{comingId}")
+    public String addPayment(Model model,@PathVariable Integer comingId) {
+        Optional<Coming> coming= comingRepository.findById(comingId);
+        model.addAttribute("coming", coming);
+        model.addAttribute("person", coming.get().getCar().getPerson());
         model.addAttribute("payments", paymentRepository.findAll());
         return "payment/add";
     }
 
 
-    @PostMapping("/add")
-    public String addPayment(@ModelAttribute Payment payment, BindingResult result,
-                         @RequestParam Integer personId, RedirectAttributes redirectAttributes) {
+    @PostMapping("/addpaymentforComing/{comingId}")
+    public String addPayment(@ModelAttribute Payment payment, BindingResult result, @PathVariable Integer comingId,
+                          RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             for (ObjectError err : result.getAllErrors()) {
                 System.out.println(err);
@@ -89,13 +89,16 @@ public class PaymentController {
             redirectAttributes.addFlashAttribute("payment", "Binding error");
         } else {
             redirectAttributes.addFlashAttribute("payment", "Added successfully");
-            Person person = personRepository.findById(personId).get();
+            //Person person = personRepository.findById(personId).get();
+            Coming coming = comingRepository.findById(comingId).get();
 //            payment.setStartDate(LocalDate.parse(payment.getStartDateDto(),
 //                    DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            payment.setPerson(person);
+            payment.setPerson(coming.getCar().getPerson());
+            payment.setStartDate(coming.getStartDate().toString());
            // Date parsedDate = new SimpleDateFormat("dd.MM.yyyy HH:mm").parse(value);
            // payment.setTime(new Timestamp(timestamp.getTime()));//вылетает Request processing failed; nested exception is java.lang.NullPointerException
-
+            coming.setPayment(true);
+            comingRepository.save(coming);
             paymentRepository.save(payment);
         }
         return "redirect:/payment";
@@ -107,3 +110,16 @@ public class PaymentController {
         return "redirect:/payment";
     }
 }
+
+
+
+//    HashMap<String, String> params = new HashMap<String, String>();
+//params.put("action", "pay");
+//        params.put("amount", "1");
+//        params.put("currency", "USD");
+//        params.put("description", "description text");
+//        params.put("order_id", "order_id_1");
+//        params.put("version", "3");
+//        LiqPay liqpay = new LiqPay(PUBLIC_KEY, PRIVATE_KEY);
+//        String html = liqpay.cnb_form(params);
+//        System.out.println(html);

@@ -1,7 +1,9 @@
 package org.ivanov.Controllers;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.ivanov.Domain.entity.Authorities;
 import org.ivanov.Domain.entity.Person;
+import org.ivanov.Domain.repositories.AuthoritiesRepository;
 import org.ivanov.Domain.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +20,8 @@ public class PersonController {
 
     @Autowired
     PersonRepository personRepository;
-
+    @Autowired
+    AuthoritiesRepository authoritiesRepository;
 
     @GetMapping
     public String index(Model model) {
@@ -44,9 +47,12 @@ public class PersonController {
             redirectAttributes.addFlashAttribute("person", "Binding error");
         } else {
             redirectAttributes.addFlashAttribute("person", "Added successfully");
+
             String md5Hex = DigestUtils.md5Hex(person.getPassword());
             person.setPassword(md5Hex);
             personRepository.save(person);
+            Authorities authorities= new Authorities(person.getEmail(),person.getStatus(),person.getId());
+            authoritiesRepository.save(authorities);
         }
         return "redirect:/person";
     }

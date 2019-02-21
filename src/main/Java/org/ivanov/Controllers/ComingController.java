@@ -21,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -48,30 +50,41 @@ public class ComingController {
     }
 
     @PostMapping()
-    public String index(Model model, @RequestParam Integer personId, @RequestParam Integer carId) {
+    public String index(Model model, @RequestParam Integer personId, @RequestParam Integer carId,
+                        @RequestParam String date1, @RequestParam  String date2) {
+
+        LocalDate datestart =  LocalDate.parse(date1);
+        LocalDate dateend =  LocalDate.parse(date2);
 
         List<Coming> comings = comingRepository.findAll();
         comingsPost = new ArrayList<>();
 
-        if (personId == 0 && carId == 0) {
-            comingsPost = comingRepository.findAll();
+        if (personId == 0 && carId == 0 ) {
+//            comingsPost = comingRepository.findAll();
+            for (Coming coming : comings) {
+                if (coming.getStartDate().isAfter(datestart) && coming.getStartDate().isBefore(dateend))
+                    comingsPost.add(coming);
+            }
             model.addAttribute("comings", comingsPost);
             return "redirect:/coming";
+
+
+
         } else if (personId != 0 && carId == 0) {
             for (Coming coming : comings) {
-                if (coming.getCar().getPerson().getId() == personId) {
+                if (coming.getCar().getPerson().getId() == personId &&coming.getStartDate().isAfter(datestart)&&coming.getStartDate().isBefore(dateend)) {
                     comingsPost.add(coming);
                 }
             }
         } else if (personId == 0 && carId != 0) {
             for (Coming coming : comings) {
-                if (coming.getCar().getId() == carId) {
+                if (coming.getCar().getId() == carId &&coming.getStartDate().isAfter(datestart)&&coming.getStartDate().isBefore(dateend)) {
                     comingsPost.add(coming);
                 }
             }
         } else {
             for (Coming coming : comings) {
-                if (coming.getCar().getPerson().getId() == personId && coming.getCar().getId() == carId) {
+                if (coming.getCar().getPerson().getId() == personId && coming.getCar().getId() == carId&&coming.getStartDate().isAfter(datestart)&&coming.getStartDate().isBefore(dateend)) {
                     comingsPost.add(coming);
                 }
             }
@@ -125,10 +138,10 @@ public class ComingController {
 
 
 
-            coming.setDays(7);
+
             coming.setFundMaintenance(Round2(coming.getMileage() * 0.13));
             coming.setFundRepairs(Round2(coming.getMileage() * 0.35));
-            coming.setCommissionPartner(Round2(coming.getIncome() * 0.07));
+            coming.setCommissionPartner(Round2(coming.getIncome() * 0.07+coming.getBonus()*0.07));
             coming.setDriverSalary(Round2(coming.getIncome() * 0.35));
             coming.setConsumptionOneKm(Round2(coming.getFuelCosts() / (double) coming.getMileage()));
             coming.setProfitOneKm(Round2(coming.getIncome() / (double) coming.getMileage()));
@@ -148,6 +161,7 @@ public class ComingController {
 
 
             coming.setProfit(Round2(coming.getIncome()
+                    + coming.getBonus()
                     - coming.getCommissionPartner()
                     - coming.getDriverSalary()
                     - coming.getFuelCosts()
@@ -158,7 +172,9 @@ public class ComingController {
 
             coming.setCommissionControl(Round2(coming.getProfit() * 0.25));
             coming.setInvestorIncome(Round2(coming.getProfit() - coming.getCommissionControl()));
-
+            coming.setDepreciation((coming.getCar().getPriceStart()*28-coming.getCar().getPriceEnd()*28)/104);
+            coming.setNetinvestorIncome(coming.getInvestorIncome()-coming.getDepreciation());
+           // coming.setBonus(coming.getBonus()*0.93*0.75);
             comingRepository.save(coming);
         }
         return "redirect:/coming";
@@ -187,10 +203,10 @@ public class ComingController {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
         coming.setCar(car);
-        coming.setDays(7);
+
         coming.setFundMaintenance(Round2(coming.getMileage() * 0.13));
         coming.setFundRepairs(Round2(coming.getMileage() * 0.35));
-        coming.setCommissionPartner(Round2(coming.getIncome() * 0.07));
+        coming.setCommissionPartner(Round2(coming.getIncome() * 0.07+coming.getBonus()*0.07));
         coming.setDriverSalary(Round2(coming.getIncome() * 0.35));
         coming.setConsumptionOneKm(Round2(coming.getFuelCosts() / (double) coming.getMileage()));
         coming.setProfitOneKm(Round2(coming.getIncome() / (double) coming.getMileage()));
@@ -201,6 +217,7 @@ public class ComingController {
 
 
         coming.setProfit(Round2(coming.getIncome()
+                + coming.getBonus()
                 - coming.getCommissionPartner()
                 - coming.getDriverSalary()
                 - coming.getFuelCosts()
@@ -211,6 +228,8 @@ public class ComingController {
 
         coming.setCommissionControl(Round2(coming.getProfit() * 0.25));
         coming.setInvestorIncome(Round2(coming.getProfit() - coming.getCommissionControl()));
+        coming.setDepreciation((coming.getCar().getPriceStart()*28-coming.getCar().getPriceEnd()*28)/104);
+        coming.setNetinvestorIncome(coming.getInvestorIncome()-coming.getDepreciation());
         comingRepository.save(coming);
         return "redirect:/coming";
     }

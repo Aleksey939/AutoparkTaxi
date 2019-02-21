@@ -40,6 +40,9 @@
                         <label>income: <input value="${coming.income}" input="number" step=".01" name="income"/>
                         </label>
                         <br/>
+                        <label>Бонус: <input value="${coming.bonus}" step=".01" name="bonus"/>
+                        </label>
+                        <br/>
                         <%--<label>commissionPartner: <input input="number" name="commissionPartner"/>--%>
                         <%--</label>--%>
                         <%--<br/>--%>

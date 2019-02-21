@@ -22,14 +22,15 @@
                     </label>
                     <input type="submit">
                 </form>
-                <a href="payment/add">Добавить</a>
+                <%--<a href="payment/add">Добавить</a>--%>
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Дата</th>
+                        <th>Период*</th>
                         <th>Сумма</th>
                         <th>Инвестор</th>
+                        <th>Карта</th>
                         <th>Время</th>
                         <th>Операция</th>
                     </tr>
@@ -46,6 +47,7 @@
                             <td>${payment.startDate}</td>
                             <td>${payment.sum}</td>
                             <td>${payment.person.lastName}</td>
+                            <td>${payment.person.card}</td>
                             <td>${payment.time}</td>
                             <th><a href="/payment/edit/${payment.id}">Редактировать</a>
                                 <a href="/payment/delete/${payment.id}">Удалить</a></th>

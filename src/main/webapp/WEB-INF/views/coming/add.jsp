@@ -39,6 +39,9 @@
                                     <label>Выручка: <input input="number" step=".01" name="income"/>
                                     </label>
                                     <br/>
+                                    <label>Бонус: <input input="bonus" step=".01" name="bonus"/>
+                                    </label>
+                                    <br/>
                                     <%--<label>commissionPartner: <input input="number" name="commissionPartner"/>--%>
                                     <%--</label>--%>
                                     <%--<br/>--%>

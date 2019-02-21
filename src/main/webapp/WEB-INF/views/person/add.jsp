@@ -19,23 +19,23 @@
                     <div class="field">
                         <form method="post">
                             <label>
-                                firstName: <input name="firstName"/>
+                                Имя: <input name="firstName"/>
                             </label>
                             <br/>
                             <label>
-                                lastName: <input name="lastName"/>
+                                Фамилия: <input name="lastName"/>
                             </label>
                             <br/>
                             <label>
-                                passport: <input name="passport"/>
+                                Паспорт: <input name="passport"/>
                             </label>
                             <br/>
                             <label>
-                                identificationNumber: <input name="identificationNumber"/>
+                                ИНН: <input name="identificationNumber"/>
                             </label>
                             <br/>
                             <label>
-                                phone: <input name="phone"/>
+                                Телефон: <input name="phone"/>
                             </label>
                             <br/>
                             <label>
@@ -43,20 +43,29 @@
                             </label>
                             <br/>
                             <label>
-                                password: <input type="password" name="password"/>
+                                Карта: <input input="card" name="card"/>
+                            </label>
+                            <br/>
+                            <label>
+                                Пароль: <input type="password" name="password"/>
                             </label> <br/>
                             <label>
-                                status: <select size="1" name="status">
+                                Статус: <select size="1" name="status">
                                 <c:forEach var="personStatusValue"
                                            items="<%=org.ivanov.Domain.entity.status.values() %>">
                                     <option> ${personStatusValue}</option>
                                 </c:forEach>
                             </select>
                             </label>
+                        <br/>
+                            <label>
+                                Загрузить фото: <input name="data" type="file"><br>
+                            </label> <br/>
                             <br/>
                             <br/>
                             <input type="submit"/>
                         </form>
+
                     </div>
                 </div>
             </div>
